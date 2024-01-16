@@ -5,7 +5,6 @@
 #include "../Aura.h"
 #include "AbilitySystemComponent.h"
 
-
 AAuraEnemyCharacter::AAuraEnemyCharacter()
 {
 	GetMesh()->SetCollisionResponseToChannel(ECC_Visibility, ECR_Block);
@@ -18,10 +17,14 @@ AAuraEnemyCharacter::AAuraEnemyCharacter()
 
 }
 
-UAbilitySystemComponent* AAuraEnemyCharacter::GetAbilitySystemComponent() const
+void AAuraEnemyCharacter::BeginPlay()
 {
-	return AbilitySystemComponent;
+	Super::BeginPlay();
+	check(AbilitySystemComponent);
+	AbilitySystemComponent->InitAbilityActorInfo(this, this);
 }
+
+
 
 void AAuraEnemyCharacter::HightLightActor()
 {

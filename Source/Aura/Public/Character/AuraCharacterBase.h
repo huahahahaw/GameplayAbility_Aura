@@ -11,7 +11,7 @@ class UAbilitySystemComponent;
 class UAttributeSet;
 
 UCLASS()
-class AURA_API AAuraCharacterBase : public ACharacter
+class AURA_API AAuraCharacterBase : public ACharacter, public IAbilitySystemInterface
 {
 	GENERATED_BODY()
 
@@ -24,6 +24,9 @@ protected:
 	UPROPERTY(EditAnywhere,Category = "Combat")
 	TObjectPtr<USkeletalMeshComponent> Weapon;
 
+
+	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
+	UAttributeSet* GetAttributeSet() { return AttributeSet; }
 protected:
 	UPROPERTY()
 	TObjectPtr<UAbilitySystemComponent> AbilitySystemComponent;

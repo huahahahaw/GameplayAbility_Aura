@@ -2,7 +2,6 @@
 
 
 #include "Player/AuraPlayerState.h"
-#include "AbilitySystemComponent.h"
 
 AAuraPlayerState::AAuraPlayerState()
 {
