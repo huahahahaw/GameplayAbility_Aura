@@ -3,6 +3,9 @@
 
 #include "AbilitySystem/AuraAttributeSet.h"
 #include <Net/UnrealNetwork.h>
+#include "GameplayEffectExtension.h"
+#include "AbilitySystemBlueprintLibrary.h"
+#include "Runtime/Engine/Classes/GameFramework/Character.h"
 
 UAuraAttributeSet::UAuraAttributeSet()
 {
@@ -35,6 +38,46 @@ void UAuraAttributeSet::PreAttributeChange(const FGameplayAttribute& Attribute, 
 	{
 		NewValue = FMath::Clamp(NewValue, 0.f, GetMaxMana());
 	}
+
+}
+
+void UAuraAttributeSet::SetEffectProperties(const FGameplayEffectModCallbackData& Data, FEffectProperties& InProps)
+{
+	InProps.EffectContextHandle = Data.EffectSpec.GetContext();
+	InProps.SourceASC = InProps.EffectContextHandle.GetOriginalInstigatorAbilitySystemComponent();
+	if (IsValid(InProps.SourceASC) && InProps.SourceASC->AbilityActorInfo.IsValid() && InProps.SourceASC->AbilityActorInfo->AvatarActor.IsValid())
+	{
+		InProps.SourceAvatarActor = InProps.SourceASC->AbilityActorInfo->AvatarActor.Get();
+		InProps.SourceController = InProps.SourceASC->AbilityActorInfo->PlayerController.Get();
+		if (InProps.SourceController == nullptr)
+		{
+			if (APawn* SourcePawn = Cast<APawn>(InProps.SourceAvatarActor))
+			{
+				InProps.SourceController = SourcePawn->GetController();
+			}
+		}
+		if (InProps.SourceController)
+		{
+			ACharacter* SourcePawn = Cast<ACharacter>(InProps.SourceController->GetPawn());
+		}
+	}
+
+	if (Data.Target.AbilityActorInfo.IsValid() && Data.Target.AbilityActorInfo->AvatarActor.Get())
+	{
+		InProps.TargetAvatarActor = Data.Target.AbilityActorInfo->AvatarActor.Get();
+		InProps.TargetController = Data.Target.AbilityActorInfo->PlayerController.Get();
+		InProps.TargetCharacter =Cast<ACharacter>(InProps.TargetAvatarActor);
+		InProps.TargetASC = UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(InProps.TargetAvatarActor);
+	}
+
+}
+
+void UAuraAttributeSet::PostGameplayEffectExecute(const struct FGameplayEffectModCallbackData& Data)
+{
+	Super::PostGameplayEffectExecute(Data);
+
+	FEffectProperties EffectProperties;
+	SetEffectProperties(Data, EffectProperties);
 
 }
 
