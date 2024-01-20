@@ -74,4 +74,6 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Applied Effects|Infinite")
 	EEffectRemovalpolicy InfiniteEffectRemovalpolicy = EEffectRemovalpolicy::DoNotRemove;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Applied Effects")
+	float ActorLevel = 1;
 };
