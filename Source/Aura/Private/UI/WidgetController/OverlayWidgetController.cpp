@@ -3,6 +3,7 @@
 
 #include "UI/WidgetController/OverlayWidgetController.h"
 #include <AbilitySystem/AuraAttributeSet.h>
+#include <AbilitySystem/AuraAbilitySystemComponent.h>
 
 void UOverlayWidgetController::BoradcastInitialValues()
 {
@@ -28,6 +29,20 @@ void UOverlayWidgetController::BindCallbacksToDependencies()
 	//MaxMana
 	AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
 		AuraAttributeSet->GetMaxManaAttribute()).AddUObject(this, &UOverlayWidgetController::MaxManaChanged);
+
+	Cast<UAuraAbilitySystemComponent>(AbilitySystemComponent)->EffectAssertTagsDelegate.AddLambda(
+		[](const FGameplayTagContainer& TagContainer)
+		{
+			for (FGameplayTag Tag : TagContainer)
+			{
+				const FString Msg = FString::Printf(TEXT("GESpec GameTagName :%s"), *Tag.ToString());
+				GEngine->AddOnScreenDebugMessage(-1, 8.f, FColor::Black, Msg);
+
+			}
+
+		
+		}
+	);
 }
 
 void UOverlayWidgetController::HealthChanged(const FOnAttributeChangeData& Data) const
