@@ -7,8 +7,8 @@
 #include "AbilitySystemInterface.h"
 #include "AuraCharacterBase.generated.h"
 
-class UAbilitySystemComponent;
 class UAttributeSet;
+class UAbilitySystemComponent;
 
 UCLASS()
 class AURA_API AAuraCharacterBase : public ACharacter, public IAbilitySystemInterface
@@ -33,4 +33,6 @@ protected:
 
 	UPROPERTY()
 	TObjectPtr<UAttributeSet> AttributeSet;
+
+	virtual void InitAbilityActorInfo();
 };

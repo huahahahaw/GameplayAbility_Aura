@@ -18,10 +18,12 @@ public:
 	AAuraEnemyCharacter();
 
 	virtual void BeginPlay() override;
+
+	virtual void InitAbilityActorInfo() override;
+
 public:
 
 	virtual void HightLightActor() override;
 	virtual void UnHightLightActor() override;
 
-	
 };
