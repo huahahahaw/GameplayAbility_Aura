@@ -33,16 +33,15 @@ void UOverlayWidgetController::BindCallbacksToDependencies()
 	Cast<UAuraAbilitySystemComponent>(AbilitySystemComponent)->EffectAssertTagsDelegate.AddLambda(
 		[this](const FGameplayTagContainer& TagContainer)
 		{
+			FGameplayTag MatchTag = FGameplayTag::RequestGameplayTag("Messages");
 			for (FGameplayTag Tag : TagContainer)
 			{
-				const FString Msg = FString::Printf(TEXT("GESpec GameTagName :%s"), *Tag.ToString());
-
-				FUIWidgetRow* Row = GetDataTableRowByTag<FUIWidgetRow>(MessageWidgetDT, Tag);
-				GEngine->AddOnScreenDebugMessage(-1, 8.f, FColor::Black,Row->Message.ToString());
-
+				if (Tag.MatchesTag(MatchTag))
+				{
+					FUIWidgetRow* Row = GetDataTableRowByTag<FUIWidgetRow>(MessageWidgetDT, Tag);
+					OnUIWidgetMessageDelegate.Broadcast(*Row);
+				}
 			}
-
-		
 		}
 	);
 }
