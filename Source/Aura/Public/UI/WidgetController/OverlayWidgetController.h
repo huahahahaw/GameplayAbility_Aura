@@ -67,4 +67,15 @@ public:
 protected:
 	UPROPERTY(EditAnywhere,BlueprintReadOnly,Category = "Widget Data")
 	TObjectPtr<UDataTable> MessageWidgetDT;
+
+	
+	template<typename T>
+	T* GetDataTableRowByTag(UDataTable* InDT,const FGameplayTag& InGamePlayTag);
+
 };
+
+template<typename T>
+T* UOverlayWidgetController::GetDataTableRowByTag(UDataTable* InDT,const FGameplayTag& InGamePlayTag)
+{
+	return InDT->FindRow<T>(InGamePlayTag.GetTagName(), TEXT(""));
+}

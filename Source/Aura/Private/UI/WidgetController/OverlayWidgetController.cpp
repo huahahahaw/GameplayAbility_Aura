@@ -31,12 +31,14 @@ void UOverlayWidgetController::BindCallbacksToDependencies()
 		AuraAttributeSet->GetMaxManaAttribute()).AddUObject(this, &UOverlayWidgetController::MaxManaChanged);
 
 	Cast<UAuraAbilitySystemComponent>(AbilitySystemComponent)->EffectAssertTagsDelegate.AddLambda(
-		[](const FGameplayTagContainer& TagContainer)
+		[this](const FGameplayTagContainer& TagContainer)
 		{
 			for (FGameplayTag Tag : TagContainer)
 			{
 				const FString Msg = FString::Printf(TEXT("GESpec GameTagName :%s"), *Tag.ToString());
-				GEngine->AddOnScreenDebugMessage(-1, 8.f, FColor::Black, Msg);
+
+				FUIWidgetRow* Row = GetDataTableRowByTag<FUIWidgetRow>(MessageWidgetDT, Tag);
+				GEngine->AddOnScreenDebugMessage(-1, 8.f, FColor::Black,Row->Message.ToString());
 
 			}
 
