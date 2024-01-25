@@ -24,7 +24,7 @@ public:
 	UAttributeSet* GetAttributeSet() { return AttributeSet; }
 
 protected:
-	UPROPERTY()
+	UPROPERTY(EditAnywhere,BlueprintReadOnly)
 	TObjectPtr<UAuraAbilitySystemComponent> AbilitySystemComponent;
 
 	UPROPERTY()
