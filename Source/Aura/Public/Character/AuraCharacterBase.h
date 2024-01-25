@@ -38,7 +38,12 @@ protected:
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<UGameplayEffect> PrimaryEffect;
 
-	virtual void InitAbilityActorInfo();
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<UGameplayEffect> SecondaryEffect;
 
-	void InitPrimaryAttributeSet();
+	void ApplyEffectToTarget(TSubclassOf<UGameplayEffect> InEffect,int Inlevel);
+
+	void InitDefaultAttribute();
+
+	virtual void InitAbilityActorInfo();
 };

@@ -27,17 +27,23 @@ UAbilitySystemComponent* AAuraCharacterBase::GetAbilitySystemComponent() const
 	return AbilitySystemComponent;
 }
 
+void AAuraCharacterBase::ApplyEffectToTarget(TSubclassOf<UGameplayEffect> InEffect, int Inlevel)
+{
+	check(IsValid(GetAbilitySystemComponent()));
+	check(InEffect);
+
+	FGameplayEffectContextHandle EffectContext = GetAbilitySystemComponent()->MakeEffectContext();
+	const FGameplayEffectSpecHandle GESpecHandle = GetAbilitySystemComponent()->MakeOutgoingSpec(InEffect, Inlevel, EffectContext);
+	GetAbilitySystemComponent()->ApplyGameplayEffectSpecToTarget(*GESpecHandle.Data.Get(), GetAbilitySystemComponent());
+}
+
+void AAuraCharacterBase::InitDefaultAttribute()
+{
+	ApplyEffectToTarget(PrimaryEffect, 1.f);
+	ApplyEffectToTarget(SecondaryEffect, 1.f);
+}
+
 void AAuraCharacterBase::InitAbilityActorInfo()
 {
 
-}
-
-void AAuraCharacterBase::InitPrimaryAttributeSet()
-{
-	check(GetAbilitySystemComponent());
-	check(PrimaryEffect);
-
-	FGameplayEffectContextHandle EffectContext = GetAbilitySystemComponent()->MakeEffectContext();
-	const FGameplayEffectSpecHandle GESpecHandle = GetAbilitySystemComponent()->MakeOutgoingSpec(PrimaryEffect, 1.f, EffectContext);
-	GetAbilitySystemComponent()->ApplyGameplayEffectSpecToTarget(*GESpecHandle.Data.Get(), GetAbilitySystemComponent());
 }
