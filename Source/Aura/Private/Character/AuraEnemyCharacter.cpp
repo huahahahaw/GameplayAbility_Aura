@@ -32,6 +32,11 @@ void AAuraEnemyCharacter::InitAbilityActorInfo()
 	Cast<UAuraAbilitySystemComponent>(AbilitySystemComponent)->AbilityActorInfoSet();
 }
 
+int32 AAuraEnemyCharacter::GetPlayerLevel()
+{
+	return Level;
+}
+
 void AAuraEnemyCharacter::HightLightActor()
 {
 	GetMesh()->SetRenderCustomDepth(true);
