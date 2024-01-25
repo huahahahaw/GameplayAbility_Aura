@@ -9,6 +9,7 @@
 
 class UAttributeSet;
 class UAbilitySystemComponent;
+class UGameplayEffect;
 
 UCLASS()
 class AURA_API AAuraCharacterBase : public ACharacter, public IAbilitySystemInterface
@@ -34,5 +35,10 @@ protected:
 	UPROPERTY()
 	TObjectPtr<UAttributeSet> AttributeSet;
 
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<UGameplayEffect> PrimaryEffect;
+
 	virtual void InitAbilityActorInfo();
+
+	void InitPrimaryAttributeSet();
 };
