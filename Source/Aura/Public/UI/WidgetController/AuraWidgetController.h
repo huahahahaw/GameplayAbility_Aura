@@ -41,7 +41,7 @@ class AURA_API UAuraWidgetController : public UObject
 {
 	GENERATED_BODY()
 public:
-	void SetWidgetControllerParams(FWidgetControllerParams& WCParams);
+	void SetWidgetControllerParams(const FWidgetControllerParams& WCParams);
 
 	virtual void BoradcastInitialValues();
 

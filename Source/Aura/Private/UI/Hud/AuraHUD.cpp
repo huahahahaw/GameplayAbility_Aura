@@ -6,7 +6,7 @@
 #include "UI/WidgetController/AuraWidgetController.h"
 #include "UI/WidgetController/OverlayWidgetController.h"
 
-UOverlayWidgetController* AAuraHUD::GetOverlayWidgetController(FWidgetControllerParams& WCP)
+UOverlayWidgetController* AAuraHUD::GetOverlayWidgetController(const FWidgetControllerParams& WCP)
 {
 	if (OverlayWidgetController == nullptr)
 	{
@@ -29,7 +29,7 @@ void AAuraHUD::InitOverlay(APlayerController* PC, APlayerState* PS, UAbilitySyst
 	UUserWidget* Widget = CreateWidget<UUserWidget>(GetWorld(), OverlayWidgetClass, FName("OverlayWidget"));
 	OverlayWidget = Cast<UAuraUserWidget>(Widget);
 
-	FWidgetControllerParams WidgetControllerParams(PC,PS,ASC,AS);
+	const FWidgetControllerParams WidgetControllerParams(PC,PS,ASC,AS);
 	UOverlayWidgetController* InOverlayWidgetController = GetOverlayWidgetController(WidgetControllerParams);
 
 	OverlayWidget->SetWidgetController(InOverlayWidgetController);

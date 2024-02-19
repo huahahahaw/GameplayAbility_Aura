@@ -28,7 +28,7 @@ public:
 	TObjectPtr<UAuraUserWidget> OverlayWidget;
 
 	
-	UOverlayWidgetController* GetOverlayWidgetController(FWidgetControllerParams& WCP);
+	UOverlayWidgetController* GetOverlayWidgetController(const FWidgetControllerParams& WCP);
 
 private:
 	UPROPERTY(EditAnywhere)
